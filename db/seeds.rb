@@ -9,6 +9,9 @@
 #   end
 # AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
+
+
+#FAKER
 # require "faker"
 
 # Product.destroy_all
@@ -47,10 +50,13 @@
 # puts "Created #{Category.count} categories"
 # puts "Created #{Product.count} products"
 
-require_relative "../app/services/dummy_json_seed"
 
-puts "Importing categories and products from DummyJSON..."
-DummyJsonSeed.run
-puts "Done!"
-puts "Categories: #{Category.count}"
-puts "Products: #{Product.count}"
+#api 
+
+# require_relative "../app/services/dummy_json_seed"
+
+# puts "Importing categories and products from DummyJSON..."
+# DummyJsonSeed.run
+# puts "Done!"
+# puts "Categories: #{Category.count}"
+# puts "Products: #{Product.count}"

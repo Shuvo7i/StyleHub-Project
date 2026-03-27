@@ -1,0 +1,46 @@
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-10">
+      <h1 class="text-4xl font-bold text-gray-900">All Products</h1>
+      <p class="mt-2 text-gray-600">Browse our latest items.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% @products.each do |product| %>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition duration-300">
+          
+          <div class="h-48 w-full bg-gray-100 flex items-center justify-center rounded-t-2xl overflow-hidden">
+            <% if product.image.attached? %>
+              <%= image_tag product.image, class: "max-h-40 max-w-full object-contain" %>
+            <% else %>
+              <span class="text-gray-400 text-sm">No Image</span>
+            <% end %>
+          </div>
+
+          <div class="p-5">
+            <p class="text-sm text-blue-600 font-medium mb-2">
+              <%= product.category.name %>
+            </p>
+
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">
+              <%= link_to product.name, product_path(product), class: "hover:text-blue-700" %>
+            </h2>
+
+            <p class="text-gray-600 text-sm mb-4">
+              <%= truncate(product.description, length: 100) %>
+            </p>
+
+            <div class="flex items-center justify-between">
+              <p class="text-2xl font-bold text-green-600">
+                <%= number_to_currency(product.price) %>
+              </p>
+
+              <%= link_to "View", product_path(product), class: "inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
+            </div>
+          </div>
+
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
