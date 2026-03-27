@@ -54,9 +54,55 @@
               <%= link_to "View", product_path(product), class: "inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
             </div>
           </div>
-
+        
         </div>
       <% end %>
     </div>
   </div>
+</div>
+
+
+
+ <div class="mt-10 flex justify-center
+  [&_.pagination]:inline-flex
+  [&_.pagination]:items-center
+  [&_.pagination]:gap-2
+  [&_.pagination]:rounded-2xl
+  [&_.pagination]:border
+  [&_.pagination]:border-gray-200
+  [&_.pagination]:bg-white
+  [&_.pagination]:p-2
+  [&_.pagination]:shadow-sm
+  [&_.pagination_a]:inline-flex
+  [&_.pagination_a]:h-10
+  [&_.pagination_a]:min-w-[40px]
+  [&_.pagination_a]:items-center
+  [&_.pagination_a]:justify-center
+  [&_.pagination_a]:rounded-xl
+  [&_.pagination_a]:px-4
+  [&_.pagination_a]:text-sm
+  [&_.pagination_a]:font-medium
+  [&_.pagination_a]:text-gray-700
+  [&_.pagination_a]:transition
+  [&_.pagination_a:hover]:bg-gray-100
+  [&_.pagination_a:hover]:text-blue-600
+  [&_.pagination_.current]:inline-flex
+  [&_.pagination_.current]:h-10
+  [&_.pagination_.current]:min-w-[40px]
+  [&_.pagination_.current]:items-center
+  [&_.pagination_.current]:justify-center
+  [&_.pagination_.current]:rounded-xl
+  [&_.pagination_.current]:bg-blue-600
+  [&_.pagination_.current]:px-4
+  [&_.pagination_.current]:text-sm
+  [&_.pagination_.current]:font-semibold
+  [&_.pagination_.current]:text-white
+  [&_.pagination_.current]:shadow
+  [&_.pagination_.gap]:inline-flex
+  [&_.pagination_.gap]:h-10
+  [&_.pagination_.gap]:min-w-[40px]
+  [&_.pagination_.gap]:items-center
+  [&_.pagination_.gap]:justify-center
+  [&_.pagination_.gap]:text-gray-400">
+  <%= paginate @products %>
 </div>
