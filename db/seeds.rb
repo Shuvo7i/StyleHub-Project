@@ -9,40 +9,48 @@
 #   end
 # AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
-require "faker"
+# require "faker"
 
-Product.destroy_all
-Category.destroy_all
+# Product.destroy_all
+# Category.destroy_all
 
 
-categories = [
-  { name: "Hoodies", description: "Warm hoodies" },
-  { name: "Shoes", description: "Stylish shoes" },
-  { name: "T-Shirts", description: "Casual shirts" },
-  { name: "Accessories", description: "Fashion accessories" }
-]
+# categories = [
+#   { name: "Hoodies", description: "Warm hoodies" },
+#   { name: "Shoes", description: "Stylish shoes" },
+#   { name: "T-Shirts", description: "Casual shirts" },
+#   { name: "Accessories", description: "Fashion accessories" }
+# ]
 
-created_categories = categories.map do |cat|
-  Category.create!(cat)
-end
+# created_categories = categories.map do |cat|
+#   Category.create!(cat)
+# end
 
-100.times do
-  category = created_categories.sample
+# 100.times do
+#   category = created_categories.sample
 
-  Product.create!(
-    category: category,
-    name: Faker::Commerce.product_name,
-    description: Faker::Lorem.sentence(word_count: 10),
-    sku: Faker::Code.unique.asin,
-    price: Faker::Commerce.price(range: 20.0..100.0),
-    stock_quantity: rand(5..50),
-    size: %w[S M L XL].sample,
-    color: Faker::Color.color_name,
-    material: %w[Cotton Denim Leather Polyester].sample,
-    on_sale: [true, false].sample,
-    featured: [true, false].sample
-  )
-end
+#   Product.create!(
+#     category: category,
+#     name: Faker::Commerce.product_name,
+#     description: Faker::Lorem.sentence(word_count: 10),
+#     sku: Faker::Code.unique.asin,
+#     price: Faker::Commerce.price(range: 20.0..100.0),
+#     stock_quantity: rand(5..50),
+#     size: %w[S M L XL].sample,
+#     color: Faker::Color.color_name,
+#     material: %w[Cotton Denim Leather Polyester].sample,
+#     on_sale: [true, false].sample,
+#     featured: [true, false].sample
+#   )
+# end
+# puts "Done!"
+# puts "Created #{Category.count} categories"
+# puts "Created #{Product.count} products"
+
+require_relative "../app/services/dummy_json_seed"
+
+puts "Importing categories and products from DummyJSON..."
+DummyJsonSeed.run
 puts "Done!"
-puts "Created #{Category.count} categories"
-puts "Created #{Product.count} products"
+puts "Categories: #{Category.count}"
+puts "Products: #{Product.count}"
