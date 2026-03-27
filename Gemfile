@@ -1,5 +1,8 @@
 source "https://rubygems.org"
 
+gem "devise"
+gem "activeadmin"
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.1.3"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
@@ -64,3 +67,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "cssbundling-rails", "= 1.4.1"
+
+gem "tailwindcss-ruby", "~> 3.4.17"
