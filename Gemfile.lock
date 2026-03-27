@@ -136,6 +136,8 @@ GEM
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
+    faker (3.6.1)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.4-aarch64-linux-gnu)
     ffi (1.17.4-aarch64-linux-musl)
     ffi (1.17.4-arm-linux-gnu)
@@ -455,6 +457,7 @@ DEPENDENCIES
   cssbundling-rails (= 1.4.1)
   debug
   devise
+  faker
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

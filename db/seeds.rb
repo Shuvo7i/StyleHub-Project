@@ -7,4 +7,39 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+# AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+require "faker"
+
+Product.destroy_all
+Category.destroy_all
+
+
+categories = [
+  { name: "Hoodies", description: "Warm hoodies" },
+  { name: "Shoes", description: "Stylish shoes" },
+  { name: "T-Shirts", description: "Casual shirts" },
+  { name: "Accessories", description: "Fashion accessories" }
+]
+
+created_categories = categories.map do |cat|
+  Category.create!(cat)
+end
+
+10.times do
+  category = created_categories.sample
+
+  Product.create!(
+    category: category,
+    name: Faker::Commerce.product_name,
+    description: Faker::Lorem.sentence(word_count: 10),
+    sku: Faker::Code.unique.asin,
+    price: Faker::Commerce.price(range: 20.0..100.0),
+    stock_quantity: rand(5..50),
+    size: %w[S M L XL].sample,
+    color: Faker::Color.color_name,
+    material: %w[Cotton Denim Leather Polyester].sample,
+    on_sale: [true, false].sample,
+    featured: [true, false].sample
+  )
+end
