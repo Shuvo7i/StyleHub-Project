@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+gem "httparty"
+gem "nokogiri"
 gem "faker"
 gem "devise"
 gem "activeadmin"
