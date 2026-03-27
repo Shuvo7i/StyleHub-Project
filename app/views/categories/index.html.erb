@@ -1,6 +1,35 @@
 <div class="min-h-screen bg-gray-50">
   <div class="max-w-6xl mx-auto px-4 py-10">
+  <%= link_to "← Back to Products", root_path, class: "inline-block mb-6 text-blue-600 hover:text-blue-800 font-medium" %>
+  
+  
     <h1 class="text-4xl font-bold text-gray-900 mb-8">Browse by Category</h1>
+
+
+    <div class="flex flex-wrap gap-3 mb-8">
+    <div class="mb-8 bg-white border border-gray-200 rounded-2xl shadow-sm p-4">
+  <%= form_with url: root_path, method: :get, local: true, class: "grid grid-cols-1 md:grid-cols-4 gap-3" do %>
+    <%= hidden_field_tag :filter, params[:filter] if params[:filter].present? %>
+
+    <div class="md:col-span-2">
+      <%= text_field_tag :q, params[:q], placeholder: "Search by product name or description...", class: "w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div>
+      <%= select_tag :category_id,
+          options_for_select([["All Categories", ""]] + @categories.map { |c| [c.name, c.id] }, params[:category_id]),
+          class: "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+    </div>
+
+    <div class="flex gap-3">
+      <%= submit_tag "Search", class: "w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 transition cursor-pointer" %>
+      <%= link_to "Clear", root_path, class: "w-full text-center bg-gray-100 text-gray-700 px-4 py-3 rounded-lg font-medium hover:bg-gray-200 transition" %>
+    </div>
+  <% end %>
+</div>
+
+
+
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <% @categories.each do |category| %>

@@ -11,11 +11,9 @@
 
 
  <div class="flex flex-wrap gap-3 mb-8">
-      <%= link_to "All Products", root_path, class: "px-4 py-2 rounded-lg border #{params[:filter].blank? ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
-
-      <%= link_to "On Sale", root_path(filter: "on_sale"), class: "px-4 py-2 rounded-lg border #{params[:filter] == 'on_sale' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
-
-      <%= link_to "New", root_path(filter: "new"), class: "px-4 py-2 rounded-lg border #{params[:filter] == 'new' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
+    <%= link_to "All Products", root_path, class: "px-4 py-2 rounded-lg border #{params[:filter].blank? ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
+    <%= link_to "On Sale", root_path(filter: "on_sale"), class: "px-4 py-2 rounded-lg border #{params[:filter] == 'on_sale' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
+    <%= link_to "New", root_path(filter: "new"), class: "px-4 py-2 rounded-lg border #{params[:filter] == 'new' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
     <%= link_to "Recently Updated", root_path(filter: "recently_updated"), class: "px-4 py-2 rounded-lg border #{params[:filter] == 'recently_updated' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
 </div>
 
