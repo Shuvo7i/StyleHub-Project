@@ -26,7 +26,7 @@ created_categories = categories.map do |cat|
   Category.create!(cat)
 end
 
-10.times do
+100.times do
   category = created_categories.sample
 
   Product.create!(
@@ -43,3 +43,6 @@ end
     featured: [true, false].sample
   )
 end
+puts "Done!"
+puts "Created #{Category.count} categories"
+puts "Created #{Product.count} products"
