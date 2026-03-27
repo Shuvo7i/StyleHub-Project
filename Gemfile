@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "httparty"
+gem "kaminari"
 gem "nokogiri"
 gem "faker"
 gem "devise"
