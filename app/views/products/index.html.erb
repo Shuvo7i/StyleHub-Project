@@ -5,10 +5,11 @@
       <p class="mt-2 text-gray-600">Browse our latest items.</p>
     </div>
 
-    <div class="mb-6">
+   <div class="mb-6 flex flex-wrap items-center gap-3">
   <%= link_to "Browse by Category", categories_path, class: "inline-block bg-gray-900 text-white px-5 py-3 rounded-lg hover:bg-gray-800 transition" %>
-</div>
 
+  <%= link_to "View Cart", cart_path, class: "ml-auto inline-block bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition" %>
+</div>
 
  <div class="flex flex-wrap gap-3 mb-8">
     <%= link_to "All Products", root_path, class: "px-4 py-2 rounded-lg border #{params[:filter].blank? ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
@@ -48,9 +49,11 @@
               <p class="text-2xl font-bold text-green-600">
                 <%= number_to_currency(product.price) %>
               </p>
-# button
+
               <%= link_to "View", product_path(product), class: "inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
+              <%= button_to "Add to Cart", add_to_cart_path(product), method: :post, class: "inline-block bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-green-700 transition border-0" %>
             </div>
+            
           </div>
         
         </div>
