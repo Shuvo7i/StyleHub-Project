@@ -12,25 +12,35 @@
     <% if @cart_items.any? %>
       <div class="space-y-4">
         <% @cart_items.each do |item| %>
-          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <h2 class="text-xl font-semibold text-gray-900">
-                <%= item[:product].name %>
-              </h2>
-              <p class="text-sm text-gray-500 mt-1">
-                Category: <%= item[:product].category.name %>
-              </p>
-              <p class="text-sm text-gray-600 mt-2">
-                Quantity: <%= item[:quantity] %>
-              </p>
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">
+                  <%= item[:product].name %>
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">
+                  Category: <%= item[:product].category.name %>
+                </p>
+                <p class="text-sm text-green-600 font-semibold mt-2">
+                  <%= number_to_currency(item[:product].price) %> each
+                </p>
+              </div>
+
+              <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                <%= form_with url: update_cart_path(item[:product]), method: :patch, local: true, class: "flex items-center gap-2" do %>
+                  <%= number_field_tag :quantity, item[:quantity], min: 1, class: "w-20 rounded-lg border border-gray-300 px-3 py-2" %>
+                  <%= submit_tag "Update", class: "bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition cursor-pointer" %>
+                <% end %>
+
+                <%= button_to "Remove", remove_from_cart_path(item[:product]), method: :delete, class: "bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition border-0" %>
+              </div>
             </div>
 
-            <div class="flex items-center gap-4">
-              <p class="text-lg font-bold text-green-600">
+            <div class="mt-4 border-t border-gray-200 pt-4 flex justify-between items-center">
+              <span class="text-gray-600">Subtotal</span>
+              <span class="text-lg font-bold text-green-600">
                 <%= number_to_currency(item[:subtotal]) %>
-              </p>
-
-              <%= button_to "Remove", remove_from_cart_path(item[:product]), method: :delete, class: "bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition border-0" %>
+              </span>
             </div>
           </div>
         <% end %>

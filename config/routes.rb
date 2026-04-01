@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
 
-   get  "cart", to: "cart#show"
+  get  "cart", to: "cart#show"
   post "cart/add/:id", to: "cart#add", as: "add_to_cart"
+  patch  "cart/update/:id", to: "cart#update", as: "update_cart"
   delete "cart/remove/:id", to: "cart#remove", as: "remove_from_cart"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)

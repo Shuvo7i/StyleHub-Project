@@ -29,7 +29,20 @@ class CartController < ApplicationController
 
     redirect_back fallback_location: root_path, notice: "Product added to cart."
   end
+  def update
+    session[:cart] ||= {}
+    product_id = params[:id].to_s
+    quantity = params[:quantity].to_i
 
+    if quantity > 0
+      session[:cart][product_id] = quantity
+      redirect_to cart_path, notice: "Cart Updated."
+    else
+      session[:cart].delete(product_id)
+      redirect_to cart_path, notice: "Item removed from the cart."
+    end
+  end
+  
   def remove
     session[:cart] ||= {}
     session[:cart].delete(params[:id].to_s)
