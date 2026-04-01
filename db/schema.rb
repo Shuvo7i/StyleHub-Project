@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_27_031251) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_01_072057) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.integer "author_id"
     t.string "author_type"
@@ -72,6 +72,42 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_031251) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "customers", force: :cascade do |t|
+    t.string "address"
+    t.string "city"
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.string "name"
+    t.string "postal_code"
+    t.string "province"
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "order_id", null: false
+    t.integer "product_id", null: false
+    t.integer "quantity"
+    t.decimal "subtotal", precision: 10, scale: 2
+    t.decimal "unit_price", precision: 10, scale: 2
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "customer_id", null: false
+    t.decimal "gst_amount", precision: 10, scale: 2
+    t.decimal "hst_amount", precision: 10, scale: 2
+    t.decimal "pst_amount", precision: 10, scale: 2
+    t.string "status"
+    t.decimal "subtotal", precision: 10, scale: 2
+    t.decimal "total", precision: 10, scale: 2
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.integer "category_id", null: false
     t.string "color"
@@ -91,5 +127,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_27_031251) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "customers"
   add_foreign_key "products", "categories"
 end

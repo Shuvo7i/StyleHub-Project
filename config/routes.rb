@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  get "orders/show"
+  get "checkout/new"
+  get "checkout/create"
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
   root "products#index"
   resources :products, only: [:index, :show]
   resources :categories, only: [:index, :show]
+  resources :orders, only: [:show]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -21,6 +25,8 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  get  "checkout", to: "checkout#new"
+  post "checkout", to: "checkout#create"
 
   # Defines the root path route ("/")
   # root "posts#index"
