@@ -5,105 +5,18 @@
       <p class="mt-2 text-gray-600">Browse our latest items.</p>
     </div>
 
-   <div class="mb-6 flex flex-wrap items-center gap-3">
-  <%= link_to "Browse by Category", categories_path, class: "inline-block bg-gray-900 text-white px-5 py-3 rounded-lg hover:bg-gray-800 transition" %>
+    <div class="mb-6 flex flex-wrap items-center gap-3">
+      <%= link_to "Browse by Category", categories_path, class: "inline-block bg-gray-900 text-white px-5 py-3 rounded-lg hover:bg-gray-800 transition" %>
 
-  <%= link_to "View Cart", cart_path, class: "ml-auto inline-block bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition" %>
-</div>
+      <%= link_to "View Cart", cart_path, class: "ml-auto inline-block bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition" %>
+    </div>
 
- <div class="flex flex-wrap gap-3 mb-8">
-    <%= link_to "All Products", root_path, class: "px-4 py-2 rounded-lg border #{params[:filter].blank? ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
-    <%= link_to "On Sale", root_path(filter: "on_sale"), class: "px-4 py-2 rounded-lg border #{params[:filter] == 'on_sale' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
-    <%= link_to "New", root_path(filter: "new"), class: "px-4 py-2 rounded-lg border #{params[:filter] == 'new' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
-    <%= link_to "Recently Updated", root_path(filter: "recently_updated"), class: "px-4 py-2 rounded-lg border #{params[:filter] == 'recently_updated' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}" %>
-</div>
-
-
+    <%= render "filters" %>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <% @products.each do |product| %>
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition duration-300">
-
-          <div class="h-48 w-full bg-gray-100 flex items-center justify-center rounded-t-2xl overflow-hidden"> 
-            <% if product.image.attached? %>
-              <%= image_tag product.image, class: "max-h-40 max-w-full object-contain" %>
-            <% else %>
-              <span class="text-gray-400 text-sm">No Image</span>
-            <% end %>
-          </div>
-
-          <div class="p-5">
-            <p class="text-sm text-blue-600 font-medium mb-2">
-              <%= product.category.name %>
-            </p>
-
-            <h2 class="text-xl font-semibold text-gray-900 mb-2">
-              <%= link_to product.name, product_path(product), class: "hover:text-blue-700" %>
-            </h2>
-
-            <p class="text-gray-600 text-sm mb-4">
-              <%= truncate(product.description, length: 100) %>
-            </p>
-
-            <div class="flex items-center justify-between">
-              <p class="text-2xl font-bold text-green-600">
-                <%= number_to_currency(product.price) %>
-              </p>
-
-              <%= link_to "View", product_path(product), class: "inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
-              <%= button_to "Add to Cart", add_to_cart_path(product), method: :post, class: "inline-block bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-green-700 transition border-0" %>
-            </div>
-            
-          </div>
-        
-        </div>
-      <% end %>
+      <%= render @products %>
     </div>
+
+    <%= render "pagination" %>
   </div>
-</div>
-
-
-
- <div class="mt-10 flex justify-center
-  [&_.pagination]:inline-flex
-  [&_.pagination]:items-center
-  [&_.pagination]:gap-2
-  [&_.pagination]:rounded-2xl
-  [&_.pagination]:border
-  [&_.pagination]:border-gray-200
-  [&_.pagination]:bg-white
-  [&_.pagination]:p-2
-  [&_.pagination]:shadow-sm
-  [&_.pagination_a]:inline-flex
-  [&_.pagination_a]:h-10
-  [&_.pagination_a]:min-w-[40px]
-  [&_.pagination_a]:items-center
-  [&_.pagination_a]:justify-center
-  [&_.pagination_a]:rounded-xl
-  [&_.pagination_a]:px-4
-  [&_.pagination_a]:text-sm
-  [&_.pagination_a]:font-medium
-  [&_.pagination_a]:text-gray-700
-  [&_.pagination_a]:transition
-  [&_.pagination_a:hover]:bg-gray-100
-  [&_.pagination_a:hover]:text-blue-600
-  [&_.pagination_.current]:inline-flex
-  [&_.pagination_.current]:h-10
-  [&_.pagination_.current]:min-w-[40px]
-  [&_.pagination_.current]:items-center
-  [&_.pagination_.current]:justify-center
-  [&_.pagination_.current]:rounded-xl
-  [&_.pagination_.current]:bg-blue-600
-  [&_.pagination_.current]:px-4
-  [&_.pagination_.current]:text-sm
-  [&_.pagination_.current]:font-semibold
-  [&_.pagination_.current]:text-white
-  [&_.pagination_.current]:shadow
-  [&_.pagination_.gap]:inline-flex
-  [&_.pagination_.gap]:h-10
-  [&_.pagination_.gap]:min-w-[40px]
-  [&_.pagination_.gap]:items-center
-  [&_.pagination_.gap]:justify-center
-  [&_.pagination_.gap]:text-gray-400">
-  <%= paginate @products %>
 </div>

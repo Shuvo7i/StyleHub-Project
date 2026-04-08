@@ -1,0 +1,39 @@
+<div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition duration-300">
+  <div class="h-48 w-full bg-gray-100 flex items-center justify-center rounded-t-2xl overflow-hidden">
+    <% if product.image.attached? %>
+      <%= image_tag product.image, class: "max-h-40 max-w-full object-contain" %>
+    <% else %>
+      <span class="text-gray-400 text-sm">No Image</span>
+    <% end %>
+  </div>
+
+  <div class="p-5">
+    <p class="text-sm text-blue-600 font-medium mb-2">
+      <%= product.category.name %>
+    </p>
+
+    <h2 class="text-xl font-semibold text-gray-900 mb-2">
+      <%= link_to product.name, product_path(product), class: "hover:text-blue-700" %>
+    </h2>
+
+    <p class="text-gray-600 text-sm mb-4">
+      <%= truncate(product.description, length: 100) %>
+    </p>
+
+    <div class="flex items-center justify-between gap-3">
+      <p class="text-2xl font-bold text-green-600">
+        <%= number_to_currency(product.price) %>
+      </p>
+
+      <div class="flex items-center gap-2">
+        <%= link_to "View", product_path(product), class: "inline-block bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
+
+        <%= button_to "Add to Cart",
+            add_to_cart_path(product),
+            method: :post,
+            form_class: "inline-block",
+            class: "inline-block bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-green-700 transition border-0" %>
+      </div>
+    </div>
+  </div>
+</div>
