@@ -6,10 +6,14 @@
     </div>
 
     <div class="mb-6 flex flex-wrap items-center gap-3">
-      <%= link_to "Browse by Category", categories_path, class: "inline-block bg-gray-900 text-white px-5 py-3 rounded-lg hover:bg-gray-800 transition" %>
+  <%= link_to "Browse by Category", categories_path, class: "inline-block bg-gray-900 text-white px-5 py-3 rounded-lg hover:bg-gray-800 transition" %>
 
-      <%= link_to "View Cart", cart_path, class: "ml-auto inline-block bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition" %>
-    </div>
+  <% if user_signed_in? %>
+    <%= link_to "My Orders", orders_path, class: "inline-block bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition" %>
+  <% end %>
+
+  <%= link_to "View Cart", cart_path, class: "ml-auto inline-block bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition" %>
+</div>
 
     <%= render "filters" %>
 
