@@ -7,7 +7,19 @@ class CheckoutController < ApplicationController
       return
     end
 
-    @customer = Customer.new
+    if user_signed_in?
+      @customer = Customer.new(
+        name: current_user.username,
+        email: current_user.email,
+        address: current_user.address,
+        city: current_user.city,
+        province: current_user.province,
+        postal_code: current_user.postal_code
+      )
+    else
+      @customer = Customer.new
+    end
+
     load_cart
   end
 
@@ -19,8 +31,22 @@ class CheckoutController < ApplicationController
       return
     end
 
-    @customer = Customer.find_or_initialize_by(email: checkout_params[:email].to_s.strip.downcase)
+    if user_signed_in?
+      current_user.update(
+        username: checkout_params[:name],
+        address: checkout_params[:address],
+        city: checkout_params[:city],
+        province: checkout_params[:province],
+        postal_code: checkout_params[:postal_code]
+      )
+      customer_email = current_user.email
+    else
+      customer_email = checkout_params[:email].to_s.strip.downcase
+    end
+
+    @customer = Customer.find_or_initialize_by(email: customer_email)
     @customer.assign_attributes(checkout_params)
+    @customer.email = customer_email
 
     unless @customer.save
       load_cart

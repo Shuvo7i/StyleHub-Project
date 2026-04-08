@@ -1,3 +1,5 @@
+
+
 <div class="min-h-screen bg-gray-50">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <div class="flex items-center justify-between mb-8">
@@ -8,6 +10,14 @@
 
       <%= link_to "Continue Shopping", root_path, class: "inline-block bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition" %>
     </div>
+    <% if user_signed_in? %>
+  <span class="text-gray-700">Hi, <%= current_user.username.presence || current_user.email %></span>
+  <%= link_to "Edit Account", edit_user_registration_path, class: "inline-block bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition" %>
+  <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "inline-block bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition border-0" %>
+<% else %>
+  <%= link_to "Sign Up", new_user_registration_path, class: "inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" %>
+  <%= link_to "Login", new_user_session_path, class: "inline-block bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition" %>
+<% end %>
 
     <% if @cart_items.any? %>
       <div class="space-y-4">
