@@ -13,7 +13,7 @@ class CheckoutController < ApplicationController
         email: current_user.email,
         address: current_user.address,
         city: current_user.city,
-        province: current_user.province,
+        province: current_user.province&.code,
         postal_code: current_user.postal_code
       )
     else
@@ -32,13 +32,16 @@ class CheckoutController < ApplicationController
     end
 
     if user_signed_in?
+      selected_province = Province.find_by(code: checkout_params[:province])
+
       current_user.update(
-        username: checkout_params[:name],
-        address: checkout_params[:address],
-        city: checkout_params[:city],
-        province: checkout_params[:province],
-        postal_code: checkout_params[:postal_code]
+      username: checkout_params[:name],
+      address: checkout_params[:address],
+      city: checkout_params[:city],
+      province: selected_province,
+      postal_code: checkout_params[:postal_code]
       )
+      
       customer_email = current_user.email
     else
       customer_email = checkout_params[:email].to_s.strip.downcase
