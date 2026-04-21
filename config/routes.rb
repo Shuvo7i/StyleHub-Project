@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show]
   resources :categories, only: [:index, :show]
-  resources :orders, only: [:index, :show]
+  resources :orders, only: [:index, :show] do
+    post :pay, on: :member
+  end
 
   get  "cart", to: "cart#show"
   post "cart/add/:id", to: "cart#add", as: "add_to_cart"

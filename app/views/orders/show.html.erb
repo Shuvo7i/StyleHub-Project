@@ -78,6 +78,13 @@
       </div>
 
       <div class="mt-8">
+        <% if @order.payment_status != "paid" %>
+          <%= button_to "Pay Now",
+              pay_order_path(@order),
+              method: :post,
+              form_class: "inline-block mr-3",
+              class: "bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition cursor-pointer" %>
+        <% end %>
         <%= link_to "Back to Products", root_path, class: "inline-block bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition" %>
       </div>
     </div>
