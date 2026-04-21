@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_08_072505) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_08_140258) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.integer "author_id"
     t.string "author_type"
@@ -100,12 +100,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_08_072505) do
     t.integer "customer_id", null: false
     t.decimal "gst_amount", precision: 10, scale: 2
     t.decimal "hst_amount", precision: 10, scale: 2
+    t.string "payment_status", default: "pending", null: false
     t.decimal "pst_amount", precision: 10, scale: 2
     t.string "status"
+    t.string "stripe_checkout_session_id"
+    t.string "stripe_payment_intent_id"
     t.decimal "subtotal", precision: 10, scale: 2
     t.decimal "total", precision: 10, scale: 2
     t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["stripe_checkout_session_id"], name: "index_orders_on_stripe_checkout_session_id", unique: true
+    t.index ["stripe_payment_intent_id"], name: "index_orders_on_stripe_payment_intent_id"
   end
 
   create_table "products", force: :cascade do |t|

@@ -7,6 +7,10 @@
           <p class="mt-2 text-gray-600">Order #<%= @order.id %></p>
           <p class="text-gray-600">Status: <%= @order.status %></p>
         </div>
+        <p class="text-gray-600">Payment Status: <%= @order.payment_status %></p>
+<% if @order.stripe_payment_intent_id.present? %>
+  <p class="text-gray-600">Stripe Payment ID: <%= @order.stripe_payment_intent_id %></p>
+<% end %>
 
         <div class="text-sm text-gray-700">
           <p class="font-semibold text-gray-900 mb-2">Customer</p>

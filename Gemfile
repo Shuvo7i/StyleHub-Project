@@ -75,3 +75,5 @@ end
 gem "cssbundling-rails", "= 1.4.1"
 
 gem "tailwindcss-ruby", "~> 3.4.17"
+
+gem "stripe", "~> 19.0"

@@ -31,17 +31,22 @@ class CheckoutController < ApplicationController
       return
     end
 
+    unless stripe_configured?
+      redirect_to cart_path, alert: "Stripe is not configured yet. Please set STRIPE_SECRET_KEY and try again."
+      return
+    end
+
     if user_signed_in?
       selected_province = Province.find_by(code: checkout_params[:province])
 
       current_user.update(
-      username: checkout_params[:name],
-      address: checkout_params[:address],
-      city: checkout_params[:city],
-      province: selected_province,
-      postal_code: checkout_params[:postal_code]
+        username: checkout_params[:name],
+        address: checkout_params[:address],
+        city: checkout_params[:city],
+        province: selected_province,
+        postal_code: checkout_params[:postal_code]
       )
-      
+
       customer_email = current_user.email
     else
       customer_email = checkout_params[:email].to_s.strip.downcase
@@ -65,6 +70,7 @@ class CheckoutController < ApplicationController
     hst_amount = (subtotal * rates[:hst]).round(2)
     total = (subtotal + gst_amount + pst_amount + hst_amount).round(2)
 
+    stripe_session = nil
     ActiveRecord::Base.transaction do
       @order = @customer.orders.create!(
         subtotal: subtotal,
@@ -72,7 +78,8 @@ class CheckoutController < ApplicationController
         pst_amount: pst_amount,
         hst_amount: hst_amount,
         total: total,
-        status: "paid"
+        status: "pending",
+        payment_status: "pending"
       )
 
       current_cart_products.each do |product|
@@ -87,10 +94,76 @@ class CheckoutController < ApplicationController
           subtotal: line_subtotal
         )
       end
+
+      stripe_session = Stripe::Checkout::Session.create(
+        mode: "payment",
+        client_reference_id: @order.id.to_s,
+        customer_email: @customer.email,
+        success_url: checkout_success_url + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url: checkout_cancel_url,
+        line_items: current_cart_products.map do |product|
+          quantity = session[:cart][product.id.to_s].to_i
+
+          {
+            quantity: quantity,
+            price_data: {
+              currency: "cad",
+              unit_amount: (product.price * 100).to_i,
+              product_data: {
+                name: product.name,
+                description: product.description.to_s.truncate(100)
+              }
+            }
+          }
+        end,
+        payment_intent_data: {
+          metadata: {
+            order_id: @order.id.to_s
+          }
+        },
+        metadata: {
+          order_id: @order.id.to_s
+        }
+      )
+
+      @order.update!(stripe_checkout_session_id: stripe_session.id)
     end
 
-    session[:cart] = {}
-    redirect_to order_path(@order), notice: "Order placed successfully."
+    redirect_to stripe_session.url, allow_other_host: true
+  end
+
+  def success
+    session_id = params[:session_id]
+
+    if session_id.blank?
+      redirect_to root_path, alert: "Missing Stripe session."
+      return
+    end
+
+    unless stripe_configured?
+      redirect_to cart_path, alert: "Stripe is not configured yet. Please set STRIPE_SECRET_KEY and try again."
+      return
+    end
+
+    stripe_session = Stripe::Checkout::Session.retrieve(session_id)
+    @order = Order.find_by!(stripe_checkout_session_id: stripe_session.id)
+
+    if stripe_session.payment_status == "paid"
+      @order.update!(
+        status: "paid",
+        payment_status: "paid",
+        stripe_payment_intent_id: stripe_session.payment_intent
+      )
+
+      session[:cart] = {}
+      redirect_to order_path(@order), notice: "Payment successful. Your order is now paid."
+    else
+      redirect_to cart_path, alert: "Payment was not completed."
+    end
+  end
+
+  def cancel
+    redirect_to cart_path, alert: "Payment was canceled."
   end
 
   private
@@ -143,5 +216,9 @@ class CheckoutController < ApplicationController
     else
       { gst: 0.05, pst: 0.0, hst: 0.0 }
     end
+  end
+
+  def stripe_configured?
+    Stripe.api_key.present?
   end
 end
