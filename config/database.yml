@@ -23,14 +23,14 @@ test:
 # Store production database in the storage/ directory, which by default
 # is mounted as a persistent Docker volume in config/deploy.yml.
 production:
-  primary:
-    url: <%= ENV["DATABASE_URL"] %>
+  primary: &production_primary
+    url: <%= ENV["DATABASE_URL"] || "postgresql://localhost/stylehub_production" %>
   cache:
-    url: <%= ENV["DATABASE_URL"] %>
+    <<: *production_primary
     migrations_paths: db/cache_migrate
   queue:
-    url: <%= ENV["DATABASE_URL"] %>
+    <<: *production_primary
     migrations_paths: db/queue_migrate
   cable:
-    url: <%= ENV["DATABASE_URL"] %>
+    <<: *production_primary
     migrations_paths: db/cable_migrate
