@@ -55,7 +55,7 @@ show do
     row :color
     row :image do |product|
       if product.displayable_image?
-        image_tag url_for(product.image), width: 120
+        image_tag url_for(product.image), alt: "#{product.name} product image", width: 120
       else
         "No image uploaded"
       end

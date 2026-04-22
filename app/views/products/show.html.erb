@@ -8,7 +8,9 @@
         
         <div class="w-full bg-gray-100 flex items-center justify-center p-6 min-h-[300px]">
           <% if @product.displayable_image? %>
-            <%= image_tag @product.image, class: "max-h-[400px] max-w-full object-contain mx-auto min-h-[400px]" %>
+            <%= image_tag @product.image,
+                alt: "#{@product.name} product image",
+                class: "max-h-[400px] max-w-full object-contain mx-auto min-h-[400px]" %>
           <% else %>
             <span class="text-gray-400 text-sm">No Image</span>
           <% end %>
