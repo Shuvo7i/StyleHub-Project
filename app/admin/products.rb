@@ -3,6 +3,22 @@ ActiveAdmin.register Product do
   permit_params :category_id, :name, :description, :sku, :price, :stock_quantity,
                 :size, :color, :material, :on_sale, :featured, :image
 
+  controller do
+    def update
+      update! do |success, failure|
+        success.html { redirect_to edit_admin_product_path(resource), notice: "Product updated successfully." }
+        failure.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+
+    def create
+      create! do |success, failure|
+        success.html { redirect_to edit_admin_product_path(resource), notice: "Product created successfully." }
+        failure.html { render :new, status: :unprocessable_entity }
+      end
+    end
+  end
+
   index do
     selectable_column
     id_column
