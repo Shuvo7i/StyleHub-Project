@@ -61,8 +61,6 @@
 # puts "Categories: #{Category.count}"
 # puts "Products: #{Product.count}"
 
-Province.destroy_all
-
 [
   ["Alberta", "AB"],
   ["British Columbia", "BC"],
@@ -78,5 +76,7 @@ Province.destroy_all
   ["Saskatchewan", "SK"],
   ["Yukon", "YT"]
 ].each do |name, code|
-  Province.create!(name: name, code: code)
+  province = Province.find_or_initialize_by(code: code)
+  province.name = name
+  province.save!
 end
