@@ -34,6 +34,7 @@
 /node_modules/
 /app/assets/builds/*
 !/app/assets/builds/.keep
+!/app/assets/builds/active_admin.css
 /public/assets
 
 # Ignore CI service files.
