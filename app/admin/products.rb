@@ -54,7 +54,7 @@ show do
   attributes_table do
     row :color
     row :image do |product|
-      if product.image.attached?
+      if product.displayable_image?
         image_tag url_for(product.image), width: 120
       else
         "No image uploaded"

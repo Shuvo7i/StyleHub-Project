@@ -11,7 +11,7 @@
       <% @products.each do |product| %>
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition">
           <div class="h-48 w-full bg-gray-100 flex items-center justify-center overflow-hidden">
-            <% if product.image.attached? %>
+            <% if product.displayable_image? %>
               <%= image_tag product.image, class: "max-h-40 max-w-full object-contain" %>
             <% else %>
               <span class="text-gray-400 text-sm">No Image</span>

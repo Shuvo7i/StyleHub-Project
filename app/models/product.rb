@@ -24,6 +24,14 @@ class Product < ApplicationRecord
     ["category"]
   end
 
+  def displayable_image?
+    return false unless image.attached? && image.blob.present?
+
+    image.blob.service.exist?(image.blob.key)
+  rescue StandardError
+    false
+  end
+
   private
 
   def normalize_fields
